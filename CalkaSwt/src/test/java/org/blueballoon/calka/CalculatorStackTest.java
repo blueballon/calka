@@ -4,6 +4,8 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import java.util.ArrayList;
+
 /**
  * Unit test for simple App.
  */
@@ -108,7 +110,30 @@ public class CalculatorStackTest
         stack1.push(stackItem2);
         stack1.push(stackItem3);
 
+        stack1.getStackContent();
+
         stack1.clear();
         assertEquals(null, stack1.pop());
     }
+
+
+    public void testCalculatorStack5()
+    {
+        CalculatorStackItem stackItem1 = new CalculatorStackItem(1.0);
+        CalculatorStackItem stackItem2 = new CalculatorStackItem(2.0);
+        CalculatorStackItem stackItem3 = new CalculatorStackItem(3.0);
+
+        CalculatorStack stack1 = new CalculatorStack();
+
+        stack1.push(stackItem1);
+        stack1.push(stackItem2);
+        stack1.push(stackItem3);
+
+        ArrayList<String> stackContent = stack1.getStackContent();
+        assertEquals(3, stackContent.size());
+        assertEquals("3.0", stackContent.get(0));
+        assertEquals("2.0", stackContent.get(1));
+        assertEquals("1.0", stackContent.get(2));
+    }
+
 }

@@ -2,6 +2,8 @@ package org.blueballoon.calka;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
+import java.util.ArrayList;
+
 
 /**
  * Stack for Calculator
@@ -9,7 +11,7 @@ import java.util.Deque;
  */
 public class CalculatorStack
 {
-    Deque<CalculatorStackItem> m_stack;
+    private Deque<CalculatorStackItem> m_stack;
 
     public CalculatorStack()
     {
@@ -56,6 +58,35 @@ public class CalculatorStack
     public void clear()
     {
         m_stack.clear();
+    }
+
+    // returns the content of the stack as String-ArrayList
+    // to be used for "display"-purposes
+    // note: the first pushed item has the highest index (size-1),
+    // the last pushed item has the lowest index 0
+    public ArrayList<String> getStackContent()
+    {
+        ArrayList<String> stackContent = new ArrayList<String>();
+
+        for (CalculatorStackItem currItem : m_stack)
+        {
+            stackContent.add(currItem.getString());
+        }
+
+        // debug only
+        /*for (String s : stackContent)
+        {
+            System.out.println(s);
+        }*/
+
+        return stackContent;
+    }
+
+    // returns the number of items on the stack
+    // especially required to check the stack condition before performing a mathematical operation
+    public Integer size()
+    {
+        return m_stack.size();
     }
 
 }

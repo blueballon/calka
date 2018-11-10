@@ -23,6 +23,16 @@ public class CalculatorStackItem
     {
         return(m_itemData.toString());
     }
-
-
+/*
+    zukuenftig: string-repraesentation mit vorgegebener Formatierung liefern
+    entweder durch eigene oder durch ueberladene Methode
+    (see: nuberformat, NumberNotation in ideas)
+    
+    public String getStringFormatted(NumberFormat numberFormat)
+    {
+        // see https://stackoverflow.com/a/4885377
+        // https://en.wikipedia.org/wiki/Scientific_notation
+        return(m_itemData.toString());
+    }
+    */
 }
