@@ -24,13 +24,16 @@ public class CalculatorStack implements ISinglePublisher
     public CalculatorStackItem pop( )
     {
         // use pollFirst instead of pop as we want to return an null object in case of an empty stack
-        return( m_stack.pollFirst() );
+        CalculatorStackItem item = m_stack.pollFirst();
+        this.notifySubscriber();
+        return(item);
     }
 
     // pushes the given value to the lowest position of the stack (fifo)
     public void push(CalculatorStackItem item)
     {
         m_stack.addFirst(item);
+        this.notifySubscriber();
     }
 
     // swaps the 2 lowest stack entries (slot 1 and slot 2)
@@ -45,6 +48,7 @@ public class CalculatorStack implements ISinglePublisher
             this.push(item1);
             this.push(item2);
         }
+        this.notifySubscriber();
     }
 
     // removes the "lowest" item from the stack
@@ -54,12 +58,14 @@ public class CalculatorStack implements ISinglePublisher
         {
              m_stack.removeFirst();
         }
+        this.notifySubscriber();
     }
 
     // clears the whole stack
     public void clear()
     {
         m_stack.clear();
+        this.notifySubscriber();
     }
 
     // returns the content of the stack as String-ArrayList
@@ -106,6 +112,9 @@ public class CalculatorStack implements ISinglePublisher
 
     public void notifySubscriber()
     {
-        m_subscriber.updateFromPublisher(this);
+        if (null != m_subscriber)
+        {
+            m_subscriber.updateFromPublisher(this);
+        }
     }
 }

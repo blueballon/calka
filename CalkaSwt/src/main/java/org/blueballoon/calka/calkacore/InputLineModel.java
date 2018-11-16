@@ -31,6 +31,7 @@ public class InputLineModel implements ISinglePublisher
     public void removeLastDigit( )
     {
         m_digitStack.removeLast();
+        this.notifySubscriber();
     }
 
 
@@ -38,6 +39,7 @@ public class InputLineModel implements ISinglePublisher
     public void pushDigit(Character digit)
     {
         m_digitStack.addLast(digit);
+        this.notifySubscriber();
     }
 
 
@@ -45,6 +47,7 @@ public class InputLineModel implements ISinglePublisher
     public void invertSign()
     {
         m_isNegative = !m_isNegative;
+        this.notifySubscriber();
     }
 
 
@@ -53,6 +56,7 @@ public class InputLineModel implements ISinglePublisher
     {
         m_digitStack.clear();
         m_isNegative = false;
+        this.notifySubscriber();
     }
 
 
@@ -63,6 +67,7 @@ public class InputLineModel implements ISinglePublisher
         String inputLineAsString=this.getInputLineString();
         Double inputLineValue = Double.valueOf(inputLineAsString);
         this.clear();
+        this.notifySubscriber();
         return(new CalculatorStackItem(inputLineValue));
     }
 
@@ -84,6 +89,7 @@ public class InputLineModel implements ISinglePublisher
                 m_digitStack.addLast(currChar);
             }
         }
+        this.notifySubscriber();
     }
 
 
@@ -115,6 +121,9 @@ public class InputLineModel implements ISinglePublisher
 
     public void notifySubscriber()
     {
-        m_subscriber.updateFromPublisher(this);
+        if (null != m_subscriber)
+        {
+            m_subscriber.updateFromPublisher(this);
+        }
     }
 }
