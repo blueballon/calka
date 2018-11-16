@@ -1,21 +1,23 @@
-package org.blueballoon.calka;
+package org.blueballoon.calka.calkacore;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.ArrayList;
-
-
+import org.blueballoon.calka.interfaces.ISinglePublisher;
+import org.blueballoon.calka.interfaces.ISingleSubscriber;
 /**
  * Stack for Calculator
  *
  */
-public class CalculatorStack
+public class CalculatorStack implements ISinglePublisher
 {
     private Deque<CalculatorStackItem> m_stack;
+    private ISingleSubscriber m_subscriber;
 
     public CalculatorStack()
     {
         m_stack = new ArrayDeque<CalculatorStackItem>();
+        m_subscriber = null;
     }
 
     // pops the "lowest" item from the stack (fifo)
@@ -89,4 +91,21 @@ public class CalculatorStack
         return m_stack.size();
     }
 
+
+    // implementation of the SinglePublisher-Interface
+    public void registerSubscriber(ISingleSubscriber subscriber)
+    {
+        m_subscriber = subscriber;
+    }
+
+
+    public void deleteSubscriber()
+    {
+        m_subscriber = null;
+    }
+
+    public void notifySubscriber()
+    {
+        m_subscriber.updateFromPublisher(this);
+    }
 }

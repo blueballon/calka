@@ -1,12 +1,11 @@
-package org.blueballoon.calka;
+package org.blueballoon.calka.calkacore;
 
-import java.util.Iterator;
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.Arrays;
 import java.util.stream.Collectors;
-import java.util.Collections;
-
+import org.blueballoon.calka.interfaces.ISinglePublisher;
+import org.blueballoon.calka.interfaces.ISingleSubscriber;
 
 
 /**
@@ -14,16 +13,17 @@ import java.util.Collections;
  * Beside the digit stack, it carries also information if the stach is treated as
  * positive or negative
  */
-public class InputLineModel
+public class InputLineModel implements ISinglePublisher
 {
     private Deque<Character> m_digitStack;
     private Boolean m_isNegative;
-
+    private ISingleSubscriber m_subscriber;
 
     public InputLineModel()
     {
         m_digitStack = new ArrayDeque<Character>();
         m_isNegative = false;  // per default, the input line is positive
+        m_subscriber = null;
     }
 
 
@@ -102,5 +102,19 @@ public class InputLineModel
         return inputLineString;
     }
 
+    // implementation of the SinglePublisher-Interface
+    public void registerSubscriber(ISingleSubscriber subscriber)
+    {
+        m_subscriber = subscriber;
+    }
 
+    public void deleteSubscriber()
+    {
+        m_subscriber = null;
+    }
+
+    public void notifySubscriber()
+    {
+        m_subscriber.updateFromPublisher(this);
+    }
 }

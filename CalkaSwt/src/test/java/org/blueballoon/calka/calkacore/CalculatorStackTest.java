@@ -1,4 +1,4 @@
-package org.blueballoon.calka;
+package org.blueballoon.calka.calkacore;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
