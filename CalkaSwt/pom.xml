@@ -13,6 +13,60 @@
     <maven.compiler.source>1.8</maven.compiler.source>
   </properties>
 
+  <build>
+      <plugins>
+    <!--      <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-jar-plugin</artifactId>
+              <version>3.1.0</version>
+              <configuration>
+                  <archive>
+                      <manifest>
+                          <mainClass>org.blueballoon.calka.App</mainClass>
+                          <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                          <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+                          <addClasspath>true</addClasspath>
+                      </manifest>
+                  </archive>
+              </configuration>
+          </plugin>  -->
+
+          <plugin>
+              <artifactId>maven-assembly-plugin</artifactId>
+              <version>3.1.0</version>
+              <configuration>
+                  <descriptorRefs>
+                      <descriptorRef>jar-with-dependencies</descriptorRef>
+                  </descriptorRefs>
+                  <archive>
+                      <manifest>
+                          <mainClass>org.blueballoon.calka.App</mainClass>
+                      </manifest>
+                  </archive>
+              </configuration>
+              <executions>
+                  <execution>
+                      <id>make-assembly</id>
+                      <phase>package</phase>
+                      <goals>
+                          <goal>single</goal>
+                      </goals>
+                  </execution>
+              </executions>
+          </plugin>
+          
+          <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-compiler-plugin</artifactId>
+              <version>3.8.0</version>
+              <configuration>
+                  <source>1.8</source>
+                  <target>1.8</target>
+              </configuration>
+          </plugin>
+      </plugins>
+  </build>
+
   <dependencies>
     <dependency>
       <groupId>junit</groupId>
@@ -30,4 +84,7 @@
 
 
   </dependencies>
+
+
+
 </project>

@@ -7,7 +7,7 @@ import junit.framework.TestSuite;
 /**
  * Unit test for simple App.
  */
-public class AppTest 
+public class AppTest
     extends TestCase
 {
     /**
@@ -33,6 +33,8 @@ public class AppTest
      */
     public void testApp()
     {
-        assertTrue( true );
+        // comment this line to avoid the mainapp-window popping out during test phase
+        App.main( null );
+        assertTrue(true);
     }
 }
