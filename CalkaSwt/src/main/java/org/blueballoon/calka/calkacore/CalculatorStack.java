@@ -36,6 +36,17 @@ public class CalculatorStack implements ISinglePublisher
         this.notifySubscriber();
     }
 
+    // "duplicates" the lowest item from the stack so it is also the second lowest item
+    // if no item is on the stack, no item is performed
+    public void dup()
+    {
+        if (m_stack.isEmpty() == false)
+        {
+            m_stack.addFirst(m_stack.getFirst());
+            this.notifySubscriber();
+        }
+    }
+
     // swaps the 2 lowest stack entries (slot 1 and slot 2)
     // if less then 2 items are on stack, no action is performed
     public void swap()
@@ -115,6 +126,10 @@ public class CalculatorStack implements ISinglePublisher
         if (null != m_subscriber)
         {
             m_subscriber.updateFromPublisher(this);
+
+            // debug
+            // System.out.println("Stack: notify");
+            // System.out.println(getStackContent().toString());
         }
     }
 }

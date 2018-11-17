@@ -136,4 +136,33 @@ public class CalculatorStackTest
         assertEquals("1.0", stackContent.get(2));
     }
 
+
+    public void testCalculatorStack6()
+    {
+        CalculatorStackItem stackItem1 = new CalculatorStackItem(1.0);
+        CalculatorStackItem stackItem2 = new CalculatorStackItem(2.0);
+        CalculatorStackItem stackItem3 = new CalculatorStackItem(3.0);
+
+        CalculatorStack stack1 = new CalculatorStack();
+
+        stack1.push(stackItem1);
+        stack1.push(stackItem2);
+        stack1.push(stackItem3);   // content 3,2,1
+
+
+        stack1.dup();              // content 3,3,2,1
+        stack1.drop();             // content 3,2,1
+        assertEquals(3.0, stack1.pop().getDouble());  // content 2,1
+
+        stack1.drop(); // content 1
+        stack1.dup();  // content 1,1
+        stack1.dup();  // content 1,1,1,
+
+        ArrayList<String> stackContent = stack1.getStackContent();
+        assertEquals(3, stackContent.size());
+        assertEquals("1.0", stackContent.get(0));
+        assertEquals("1.0", stackContent.get(1));
+        assertEquals("1.0", stackContent.get(2));
+
+    }
 }

@@ -3,8 +3,8 @@ package org.blueballoon.calka;
 import org.blueballoon.calka.calkaswt.CalkaSwtApp;
 
 /**
- * Hello world!
- *
+ * calka main
+ * just starts up the UI app runner
  */
 public class App
 {

@@ -46,8 +46,16 @@ public class InputLineModel implements ISinglePublisher
     // inverts the sign of the input line
     public void invertSign()
     {
-        m_isNegative = !m_isNegative;
-        this.notifySubscriber();
+        if (m_digitStack.isEmpty() == false)
+        {
+            m_isNegative = !m_isNegative;
+            this.notifySubscriber();
+        }
+        else
+        {
+            // in case of an empty input line, enforce positve sign
+            m_isNegative = false;
+        }
     }
 
 
@@ -62,13 +70,18 @@ public class InputLineModel implements ISinglePublisher
 
     // returns a CalculatorStackItem-Representation of the InputLineModel
     // and clears the InputLineModel
+    // if the input line is empty, null is returned an no action is performed
     public CalculatorStackItem popInputLine()
     {
-        String inputLineAsString=this.getInputLineString();
-        Double inputLineValue = Double.valueOf(inputLineAsString);
-        this.clear();
-        this.notifySubscriber();
-        return(new CalculatorStackItem(inputLineValue));
+        if (m_digitStack.isEmpty() == false)
+        {
+            String inputLineAsString=this.getInputLineString();
+            Double inputLineValue = Double.valueOf(inputLineAsString);
+            this.clear();
+            this.notifySubscriber();
+            return(new CalculatorStackItem(inputLineValue));
+        }
+        return(null);
     }
 
 
@@ -94,18 +107,23 @@ public class InputLineModel implements ISinglePublisher
 
 
     // returns the String-Representation of InputLineModel
+    // returns empty string if digitStack is empty
     public String getInputLineString()
     {
-        // evtl future: wenn stack leer, dann "0" als String zurueckgeben
-        Character [] inputLineChars = m_digitStack.toArray(new Character[0]);
-        // from Stackoverflow: https://stackoverflow.com/a/36188933
-        // requires Java8
-        String inputLineString = Arrays.stream(inputLineChars).map(Object::toString).collect( Collectors.joining() );
-        if (m_isNegative)
+        if (m_digitStack.isEmpty() == false)
         {
-            inputLineString = "-"+inputLineString;
+            // evtl future: wenn stack leer, dann "0" als String zurueckgeben
+            Character [] inputLineChars = m_digitStack.toArray(new Character[0]);
+            // from Stackoverflow: https://stackoverflow.com/a/36188933
+            // requires Java8
+            String inputLineString = Arrays.stream(inputLineChars).map(Object::toString).collect( Collectors.joining() );
+            if (m_isNegative)
+            {
+                inputLineString = "-"+inputLineString;
+            }
+            return inputLineString;
         }
-        return inputLineString;
+        return "";
     }
 
     // implementation of the SinglePublisher-Interface

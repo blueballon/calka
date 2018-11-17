@@ -26,6 +26,7 @@ public class CalkaController
     // for singelton: hidden constructor
     private CalkaController () {}
 
+
     // for singelton: instance method
     public static CalkaController getInstance () {
         if (CalkaController.m_instance == null) {
@@ -65,12 +66,26 @@ public class CalkaController
     // intended to be called from ui-listeners
     public void receiveUiEvent(UiEvents event)
     {
-        System.out.println("The event was: " + event);
+        // debug System.out.println("The event was: " + event);
         // in future: maybe log the events here
         if (CalkaController.m_instance != null)
         {
             performLogic(event);
         }
+    }
+
+
+    // if not null, pushes the itemline to the stack
+    // returns ok if inputLine was not null, false otherwise
+    private boolean tryPushInputLineToStack()
+    {
+        CalculatorStackItem inputLineItem = CalkaController.m_inputLine.popInputLine();
+        if (inputLineItem != null)
+        {
+            CalkaController.m_calcStack.push(inputLineItem);
+            return(true);
+        }
+        return(false);
     }
 
 
@@ -81,25 +96,75 @@ public class CalkaController
         switch(event)
         {
             case DIGIT_0:
+                CalkaController.m_inputLine.pushDigit('0');
+                break;
             case DIGIT_1:
+                CalkaController.m_inputLine.pushDigit('1');
+                break;
             case DIGIT_2:
+                CalkaController.m_inputLine.pushDigit('2');
+                break;
             case DIGIT_3:
+                CalkaController.m_inputLine.pushDigit('3');
+                break;
             case DIGIT_4:
+                CalkaController.m_inputLine.pushDigit('4');
+                break;
             case DIGIT_5:
+                CalkaController.m_inputLine.pushDigit('5');
+                break;
             case DIGIT_6:
+                CalkaController.m_inputLine.pushDigit('6');
+                break;
             case DIGIT_7:
+                CalkaController.m_inputLine.pushDigit('7');
+                break;
             case DIGIT_8:
+                CalkaController.m_inputLine.pushDigit('8');
+                break;
             case DIGIT_9:
+                CalkaController.m_inputLine.pushDigit('9');
+                break;
             case DIGIT_COMMA:
+                CalkaController.m_inputLine.pushDigit('.');
+                break;
             case MODIFIER_CHANGESIGN:
+                CalkaController.m_inputLine.invertSign();
+                break;
             case OPERATION_PLUS:
+                tryPushInputLineToStack();
+                CalkaController.m_calcCore.Add();
+                break;
             case OPERATION_MINUS:
+                tryPushInputLineToStack();
+                CalkaController.m_calcCore.Subtract();
+                break;
             case OPERATION_MULTIPLY:
+                tryPushInputLineToStack();
+                CalkaController.m_calcCore.Multiply();
+                break;
             case OPERATION_DIVIDE:
+                tryPushInputLineToStack();
+                CalkaController.m_calcCore.Divide();
+                break;
             case STACK_ENTER:
+                if (!tryPushInputLineToStack())
+                {
+                    CalkaController.m_calcStack.dup();
+                }
+                break;
             case STACK_SWAP:
+                tryPushInputLineToStack();
+                CalkaController.m_calcStack.swap();
+                break;
             case STACK_DROP:
+                tryPushInputLineToStack();
+                CalkaController.m_calcStack.drop();
+                break;
             case STACK_CLEAR:
+                tryPushInputLineToStack();
+                CalkaController.m_calcStack.clear();
+                break;
         }
     }
 

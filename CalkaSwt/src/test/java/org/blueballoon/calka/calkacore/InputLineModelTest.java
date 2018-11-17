@@ -70,4 +70,12 @@ public class InputLineModelTest
         assertEquals("-12.34",inputLine.getInputLineString() );
         assertEquals(-12.34,inputLine.popInputLine().getDouble());
     }
+
+    public void testInputLineModel4()
+    {
+        InputLineModel inputLine = new InputLineModel();
+        inputLine.invertSign();
+        assertEquals("",inputLine.getInputLineString() );
+        assertEquals(null,inputLine.popInputLine());
+    }
 }
