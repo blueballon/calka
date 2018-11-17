@@ -4,7 +4,7 @@ package org.blueballoon.calka.calkacore;
  * StackItem for Calculator
  *
  */
-public class CalculatorStackItem
+class CalculatorStackItem
 {
     // first variant: use (Java)Double as internal representation of calculator CalculatorStackItemTest
     Double m_itemData;

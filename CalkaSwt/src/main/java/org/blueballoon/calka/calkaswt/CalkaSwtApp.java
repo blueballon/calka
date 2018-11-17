@@ -17,6 +17,12 @@ public class CalkaSwtApp
         calkaShell.setText("CalKaSwt");
         calkaShell.setLayout(new RowLayout());
 
+        // todo build the stack view and register it as subscriber at the CalkaController
+
+        // todo build the inputline view and register it as subscriber at the CalkaController
+
+
+
         final SwtCalculatorButtons calculatorButtons = new SwtCalculatorButtons(calkaShell, SWT.BORDER);
 
 
